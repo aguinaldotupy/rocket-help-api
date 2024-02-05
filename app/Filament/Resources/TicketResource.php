@@ -56,7 +56,8 @@ class TicketResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->badge(),
                 Tables\Columns\TextColumn::make('createdBy.name')
                     ->searchable()
                     ->sortable(),
@@ -101,7 +102,8 @@ class TicketResource extends Resource
             TextEntry::make('title')
                 ->label('Title'),
             TextEntry::make('status')
-                ->label('Status'),
+                ->label('Status')
+                ->badge(),
             TextEntry::make('createdBy.name')
                 ->label('Created By'),
             TextEntry::make('created_at')

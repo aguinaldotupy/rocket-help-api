@@ -13,7 +13,7 @@ return [
      * Your API domain. By default, app domain is used. This is also a part of the default API routes
      * matcher, so when implementing your own, make sure you use this config if needed.
      */
-    'api_domain' => null,
+    'api_domain' => env('SCRAMBLE_API_DOMAIN', null),
 
     'info' => [
         /*

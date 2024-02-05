@@ -33,10 +33,6 @@ class TicketController extends Controller
         );
     }
 
-    /**
-     * @param TicketStoreRequest $request
-     * @return \Illuminate\Http\Response
-     */
     public function open(TicketStoreRequest $request): Response
     {
         $ticket = new Ticket();

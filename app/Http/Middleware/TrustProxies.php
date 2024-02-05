@@ -12,7 +12,13 @@ class TrustProxies extends Middleware
      *
      * @var array<int, string>|string|null
      */
-    protected $proxies;
+    protected $proxies = [
+        'rocket-help.yupiweb.com.br',
+        '192.168.7.100:7077',
+        '127.0.0.1:7077',
+        '192.168.7.100',
+        '127.0.0.1',
+    ];
 
     /**
      * The headers that should be used to detect proxies.
