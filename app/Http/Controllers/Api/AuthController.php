@@ -6,14 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum'])->only(['logout']);
+    }
+
     /**
      * @unauthenticated
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function login(Request $request): JsonResponse
     {
@@ -35,17 +38,32 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout(Request $request): Response
+    public function logout(Request $request): JsonResponse
     {
-        $request->user()->tokens()->delete();
+        if (!$request->user()) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
 
-        return response()->noContent();
+        try {
+            $request->user()->tokens()->delete();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage(), [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            return response()->json([
+                'message' => 'Something went wrong'
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'Logged out successfully'
+        ]);
     }
 
     /**
      * @unauthenticated
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function register(Request $request): JsonResponse
     {
